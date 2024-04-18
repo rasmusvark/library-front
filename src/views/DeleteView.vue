@@ -1,6 +1,14 @@
 <template>
   <div class="catalog-container">
-    <h2>Kustuta raamatut</h2>
+    <h2>Kustuta raamat</h2>
+    <div class="search-container">
+      <input
+        v-model="searchQuery"
+        type="text"
+        placeholder="Otsi pealkirja järgi"
+        class="search-input"
+      />
+    </div>
     <div class="table-wrapper">
       <table>
         <thead>
@@ -14,14 +22,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="book in books" :key="book.id">
-            <td>{{ book.name }}</td>
+          <tr v-for="book in filteredBooks" :key="book.id">
+            <td>{{ book.title }}</td>
             <td>{{ book.author }}</td>
             <td>{{ book.publishingYear }}</td>
             <td>{{ book.category }}</td>
             <td>{{ book.available ? 'Saadaval' : 'Ei ole saadaval' }}</td>
             <td>
-              <button @click="confirmDelete(book.id, book.name)">Kustuta</button>
+              <button @click="confirmDelete(book.id, book.title)">Kustuta</button>
             </td>
           </tr>
         </tbody>
@@ -35,9 +43,9 @@
     <div v-if="showModal" class="modal">
       <div class="modal-content">
         <span class="close" @click="showModal = false">&times;</span>
-        <p>Kas oled kindel, et soovid kustutada raamatu "{{ bookToDeleteName }}"?</p>
-        <button @click="deleteBook(bookToDeleteId)">Yes</button>
-        <button @click="showModal = false">Back</button>
+        <p>Kas oled kindel, et soovid kustutada raamatu "{{ bookToDeleteTitle }}"?</p>
+        <button @click="deleteBook(bookToDeleteId)">Jah</button>
+        <button @click="showModal = false">Tagasi</button>
       </div>
     </div>
   </div>
@@ -47,14 +55,25 @@
 import axios from 'axios';
 
 export default {
-  name: 'CatalogView',
+  name: 'DeleteView',
   data() {
     return {
       books: [],
+      searchQuery: '',
       showModal: false,
       bookToDeleteId: null,
-      bookToDeleteName: ""
+      bookToDeleteTitle: ""
     };
+  },
+  computed: {
+    filteredBooks() {
+      if (this.searchQuery) {
+        return this.books.filter((book) =>
+          book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
+      }
+      return this.books; // If there's no search query, return all books
+    }
   },
   created() {
     this.fetchBooks();
@@ -69,14 +88,15 @@ export default {
           console.error('Error fetching books:', error);
         });
     },
-    confirmDelete(id, name) {
+    confirmDelete(id, title) {
       this.bookToDeleteId = id;
-      this.bookToDeleteName = name;
+      this.bookToDeleteTitle = title;
       this.showModal = true;
     },
     deleteBook(id) {
       axios.delete(`http://localhost:8080/books/${id}`)
         .then(() => {
+          alert('Raamat kustutatud!');
           this.showModal = false;
           this.fetchBooks(); // Refresh the list after deletion
         })

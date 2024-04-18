@@ -8,6 +8,7 @@
   .table-wrapper {
     max-height: 400px;
     overflow-y: auto;
+    margin-bottom: 20px;
   }
   
   table {
@@ -31,4 +32,17 @@
   
   tr:hover {
     background-color: #eaeaea;
+  }
+
+  .search-input {
+    width: 25%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .search-container {
+    text-align: left;
   }

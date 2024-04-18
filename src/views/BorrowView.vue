@@ -1,6 +1,14 @@
 <template>
   <div class="catalog-container">
     <h2>Saadaolevad raamatud</h2>
+    <div class="search-container">
+      <input
+        v-model="searchQuery"
+        type="text"
+        placeholder="Otsi pealkirja järgi"
+        class="search-input"
+      />
+    </div>
     <div class="table-wrapper">
       <table>
         <thead>
@@ -13,8 +21,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="book in availableBooks" :key="book.id">
-            <td>{{ book.name }}</td>
+          <tr v-for="book in filteredAvailableBooks" :key="book.id">
+            <td>{{ book.title }}</td>
             <td>{{ book.author }}</td>
             <td>{{ book.publishingYear }}</td>
             <td>{{ book.category }}</td>
@@ -41,10 +49,17 @@ export default {
   data() {
     return {
       books: [],
+      searchQuery: '',
       isBorrowing: false
     };
   },
   computed: {
+    filteredAvailableBooks() {
+      return this.searchQuery 
+        ? this.availableBooks.filter((book) =>
+            book.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
+        : this.availableBooks;
+    },
     availableBooks() {
       return this.books.filter(book => book.available);
     }

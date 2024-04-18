@@ -9,7 +9,8 @@
 body, html {
   margin: 0;
   padding: 0;
-  background: #f9f9f9; 
+  background: url('@/assets/images/library.jpg'); 
+  background-size: cover;
   font-family: 'Roboto', sans-serif; 
 }
 
@@ -18,7 +19,7 @@ body, html {
   max-width: 960px;
   margin: 60px auto; 
   padding: 2px;
-  background: #fff; 
+  background: #f3f2f2; 
   border-radius: 8px; 
   text-align: center; 
 }

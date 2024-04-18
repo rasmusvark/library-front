@@ -3,7 +3,7 @@
     <h2>Lisa uus raamat</h2>
     <form @submit.prevent="addBook">
       <div>
-        <input v-model="newBook.name" placeholder="Raamatu pealkiri" required oninvalid="this.setCustomValidity('Palun sisestage raamatu nimi')" oninput="this.setCustomValidity('')">
+        <input v-model="newBook.title" placeholder="Raamatu pealkiri" required oninvalid="this.setCustomValidity('Palun sisestage raamatu nimi')" oninput="this.setCustomValidity('')">
         <input v-model="newBook.author" placeholder="Autor" required oninvalid="this.setCustomValidity('Palun sisestage autor')" oninput="this.setCustomValidity('')">
         <input v-model="newBook.publishingYear" placeholder="Ilmumisaasta">
         <input v-model="newBook.category" placeholder="Kategooria">
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       newBook: {
-        name: '',
+        title: '',
         author: '',
         publishingYear: '',
         category: ''
@@ -34,7 +34,7 @@ export default {
   methods: {
     addBook() {
   const payload = {
-    name: this.newBook.name,
+    title: this.newBook.title,
     author: this.newBook.author,
     category: this.newBook.category,
     publishingYear: this.newBook.publishingYear ? parseInt(this.newBook.publishingYear) : null,
@@ -51,7 +51,7 @@ export default {
     });
 },
 resetForm() {
-  this.newBook = { name: '', author: '', publishingYear: '', category: '' };
+  this.newBook = { title: '', author: '', publishingYear: '', category: '' };
 }
   }
 }
