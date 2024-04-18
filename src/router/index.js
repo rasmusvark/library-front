@@ -7,7 +7,7 @@ import CatalogView from '../views/CatalogView.vue';
 import DeleteView from '../views/DeleteView.vue';
 
 const router = createRouter({
-    history: createWebHistory(), // Use createWebHistory instead of mode: 'history'
+    history: createWebHistory(), 
     routes: [
         {
             path: '/',

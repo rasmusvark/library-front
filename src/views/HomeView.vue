@@ -19,7 +19,6 @@
   </script>
   
   <style>
-  /* Style as needed */
   nav a {
     margin-right: 10px;
     text-decoration: none;

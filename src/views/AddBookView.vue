@@ -3,7 +3,7 @@
     <h2>Lisa uus raamat</h2>
     <form @submit.prevent="addBook">
       <div>
-        <input v-model="newBook.name" placeholder="Raamatu nimi" required oninvalid="this.setCustomValidity('Palun sisestage raamatu nimi')" oninput="this.setCustomValidity('')">
+        <input v-model="newBook.name" placeholder="Raamatu pealkiri" required oninvalid="this.setCustomValidity('Palun sisestage raamatu nimi')" oninput="this.setCustomValidity('')">
         <input v-model="newBook.author" placeholder="Autor" required oninvalid="this.setCustomValidity('Palun sisestage autor')" oninput="this.setCustomValidity('')">
         <input v-model="newBook.publishingYear" placeholder="Ilmumisaasta">
         <input v-model="newBook.category" placeholder="Kategooria">
@@ -33,15 +33,26 @@ export default {
   },
   methods: {
     addBook() {
-      axios.post('http://localhost:8080/books', this.newBook)
-        .then(() => {
-          alert('Raamat edukalt lisatud!');
-          this.newBook = { name: '', author: '', publishingYear: '', category: '' }; // Reset form
-        })
-        .catch(error => {
-          console.error('Viga raamatu lisamisel:', error);
-        });
-    }
+  const payload = {
+    name: this.newBook.name,
+    author: this.newBook.author,
+    category: this.newBook.category,
+    publishingYear: this.newBook.publishingYear ? parseInt(this.newBook.publishingYear) : null,
+  };
+
+  axios.post('http://localhost:8080/books', payload)
+    .then(() => {
+      alert('Raamat edukalt lisatud!');
+      this.resetForm();
+    })
+    .catch(error => {
+      console.error('Viga raamatu lisamisel:', error.response.data.message);
+      alert(error.response.data.message || 'Viga raamatu lisamisel'); // Show more user-friendly error messages
+    });
+},
+resetForm() {
+  this.newBook = { name: '', author: '', publishingYear: '', category: '' };
+}
   }
 }
 </script>

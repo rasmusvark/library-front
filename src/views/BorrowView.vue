@@ -1,12 +1,35 @@
 <template>
-  <div>
-    <h2>Borrow a Book</h2>
-    <ul>
-      <li v-for="book in availableBooks" :key="book.id">
-        {{ book.name }} by {{ book.author }}
-        <button @click="borrowBook(book.id)">Borrow</button>
-      </li>
-    </ul>
+  <div class="catalog-container">
+    <h2>Saadaolevad raamatud</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Pealkiri</th>
+            <th>Autor</th>
+            <th>Ilmumisaasta</th>
+            <th>Kategooria</th>
+            <th>Tegevus</th> <!-- Action for borrowing -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="book in availableBooks" :key="book.id">
+            <td>{{ book.name }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.publishingYear }}</td>
+            <td>{{ book.category }}</td>
+            <td>
+              <button @click="borrowBook(book.id)" :disabled="isBorrowing">
+                Laenuta
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <router-link to="/">
+      <button>Tagasi</button>
+    </router-link>
   </div>
 </template>
 
@@ -17,7 +40,8 @@ export default {
   name: 'BorrowView',
   data() {
     return {
-      books: []
+      books: [],
+      isBorrowing: false
     };
   },
   computed: {
@@ -39,14 +63,23 @@ export default {
         });
     },
     borrowBook(id) {
+      this.isBorrowing = true;
       axios.patch(`http://localhost:8080/books/${id}/borrow`)
         .then(() => {
-          this.fetchAvailableBooks(); // Refresh list after borrowing
+          alert('Raamat väljastatud!');
+          this.fetchAvailableBooks();
         })
         .catch(error => {
           console.error('Error borrowing book:', error);
+        })
+        .finally(() => {
+          this.isBorrowing = false;
         });
     }
   }
 }
 </script>
+
+<style scoped>
+  @import '@/assets/css/commonStyles.css';
+</style>

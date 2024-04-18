@@ -9,31 +9,22 @@
 body, html {
   margin: 0;
   padding: 0;
-  background: #f9f9f9; /* Light grey background for a soft look */
-  font-family: 'Roboto', sans-serif; /* Roboto for a clean, modern appearance */
+  background: #f9f9f9; 
+  font-family: 'Roboto', sans-serif; 
 }
 
 #app {
   width: 90%;
   max-width: 960px;
-  margin: 60px auto; /* Provides spacing at the top and bottom */
-  padding: 20px;
-  background: #fff; /* The white background for the card */
-  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* A subtle shadow around the card */
-  border-radius: 8px; /* Rounded corners for the card */
-  text-align: center; /* Centers the text within the card */
-}
-
-/* Additional elements like forms, divs, and sections inside #app should not
-   have their own background or they should be set to transparent. */
-   .form-container, .content, .view, .home, .other-class-names {
-  background: transparent; /* No background to avoid nested rectangles */
-  padding: 20px; /* Spacing inside each content section if needed */
-  /* More styling specific to the content if needed */
+  margin: 60px auto; 
+  padding: 2px;
+  background: #fff; 
+  border-radius: 8px; 
+  text-align: center; 
 }
 
 a, button {
-  color: #333; /* More natural, dark grey color for better contrast */
+  color: #333;
   text-decoration: none;
   font-weight: 500;
   display: inline-block; /* Ensures links are alignable */
@@ -55,20 +46,19 @@ button:hover {
 }
 
 input, select, textarea {
-  width: 80%; /* Adjusted width for form elements */
+  width: 80%;
   padding: 12px;
-  margin: 10px auto; /* Centering margins */
+  margin: 10px auto;
   border: 2px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
 }
 
 input:focus, select:focus, textarea:focus {
-  border-color: #333; /* Focus color to draw attention */
+  border-color: #333;
 }
 
-/* Remove specific navigation styles since you prefer no boxes around links */
 nav a:hover {
-  background-color: transparent; /* Clear any background changes on hover */
+  background-color: transparent;
 }
 </style>
