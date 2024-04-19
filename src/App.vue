@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- Router view will display the component based on the current route -->
     <router-view/>
   </div>
 </template>

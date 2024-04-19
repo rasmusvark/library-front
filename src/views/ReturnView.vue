@@ -82,7 +82,7 @@ export default {
       axios.patch(`http://localhost:8080/books/${id}/return`)
         .then(() => {
           alert('Raamat tagastatud!');
-          this.fetchBorrowedBooks(); // Refresh list after returning
+          this.fetchBorrowedBooks();
         })
         .catch(error => {
           console.error('Error returning book:', error);

@@ -38,8 +38,6 @@
     <router-link to="/">
       <button>Tagasi</button>
     </router-link>
-
-    <!-- Modal Section -->
     <div v-if="showModal" class="modal">
       <div class="modal-content">
         <span class="close" @click="showModal = false">&times;</span>
@@ -72,7 +70,7 @@ export default {
           book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       }
-      return this.books; // If there's no search query, return all books
+      return this.books; 
     }
   },
   created() {
@@ -98,7 +96,7 @@ export default {
         .then(() => {
           alert('Raamat kustutatud!');
           this.showModal = false;
-          this.fetchBooks(); // Refresh the list after deletion
+          this.fetchBooks();
         })
         .catch(error => {
           console.error('Error deleting book:', error);

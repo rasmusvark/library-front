@@ -17,7 +17,7 @@
             <th>Autor</th>
             <th>Ilmumisaasta</th>
             <th>Kategooria</th>
-            <th>Tegevus</th> <!-- Action for borrowing -->
+            <th>Tegevus</th>
           </tr>
         </thead>
         <tbody>

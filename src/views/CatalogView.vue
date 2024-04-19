@@ -55,7 +55,7 @@ export default {
           book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       }
-      return this.books; // If there's no search query, return all books
+      return this.books;
     }
   },
   created() {

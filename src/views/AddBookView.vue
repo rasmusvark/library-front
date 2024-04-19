@@ -47,7 +47,7 @@ export default {
     })
     .catch(error => {
       console.error('Viga raamatu lisamisel:', error.response.data.message);
-      alert(error.response.data.message || 'Viga raamatu lisamisel'); // Show more user-friendly error messages
+      alert(error.response.data.message || 'Viga raamatu lisamisel');
     });
 },
 resetForm() {
