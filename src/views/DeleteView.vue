@@ -38,27 +38,37 @@
     <router-link to="/">
       <button>Tagasi</button>
     </router-link>
-    <div v-if="showModal" class="modal">
+    <div v-if="showConfirmModal" class="modal">
       <div class="modal-content">
-        <span class="close" @click="showModal = false">&times;</span>
+        <span class="close" @click="closeConfirmModal">&times;</span>
         <p>Kas oled kindel, et soovid kustutada raamatu "{{ bookToDeleteTitle }}"?</p>
         <button @click="deleteBook(bookToDeleteId)">Jah</button>
-        <button @click="showModal = false">Tagasi</button>
+        <button @click="closeConfirmModal">Tagasi</button>
       </div>
     </div>
+    <success-modal 
+      :modal-message="'Raamat kustutatud!'" 
+      v-model:isModalVisible="showSuccessModal" 
+      @close="showSuccessModal = false"
+    ></success-modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import SuccessModal from '@/components/SuccessModal.vue';
 
 export default {
   name: 'DeleteView',
+  components: {
+    SuccessModal
+  },
   data() {
     return {
       books: [],
       searchQuery: '',
-      showModal: false,
+      showConfirmModal: false,
+      showSuccessModal: false,
       bookToDeleteId: null,
       bookToDeleteTitle: ""
     };
@@ -89,18 +99,21 @@ export default {
     confirmDelete(id, title) {
       this.bookToDeleteId = id;
       this.bookToDeleteTitle = title;
-      this.showModal = true;
+      this.showConfirmModal = true;
+    },
+    closeConfirmModal() {
+      this.showConfirmModal = false;
     },
     deleteBook(id) {
       axios.delete(`http://localhost:8080/books/${id}`)
         .then(() => {
-          alert('Raamat kustutatud!');
-          this.showModal = false;
+          this.showConfirmModal = false;
+          this.showSuccessModal = true;
           this.fetchBooks();
         })
         .catch(error => {
           console.error('Error deleting book:', error);
-          this.showModal = false;
+          this.showConfirmModal = false;
         });
     }
   }

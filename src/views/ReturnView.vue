@@ -38,20 +38,31 @@
     <router-link to="/">
       <button>Tagasi</button>
     </router-link>
+    <success-modal 
+    :modal-message="'Raamat tagastatud!'" 
+    v-model:isModalVisible="showModal" 
+    @close="showModal = false"
+  ></success-modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import SuccessModal from '@/components/SuccessModal.vue';
 
 export default {
   name: 'ReturnView',
+  components: {
+    SuccessModal
+  },
   data() {
     return {
       books: [],
       searchQuery: '',
-      isReturning: false
+      isReturning: false,
+      showModal: false
     };
+    
   },
   computed: {
     filteredBorrowedBooks() {
@@ -81,7 +92,7 @@ export default {
       this.isReturning = true;
       axios.patch(`http://localhost:8080/books/${id}/return`)
         .then(() => {
-          alert('Raamat tagastatud!');
+          this.showModal = true;
           this.fetchBorrowedBooks();
         })
         .catch(error => {

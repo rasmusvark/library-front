@@ -38,19 +38,29 @@
     <router-link to="/">
       <button>Tagasi</button>
     </router-link>
+    <success-modal 
+    :modal-message="'Raamat väljastatud!'" 
+    v-model:isModalVisible="showModal" 
+    @close="showModal = false"
+  ></success-modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import SuccessModal from '@/components/SuccessModal.vue';
 
 export default {
   name: 'BorrowView',
+  components: {
+    SuccessModal
+  },
   data() {
     return {
       books: [],
       searchQuery: '',
-      isBorrowing: false
+      isBorrowing: false,
+      showModal: false
     };
   },
   computed: {
@@ -81,7 +91,7 @@ export default {
       this.isBorrowing = true;
       axios.patch(`http://localhost:8080/books/${id}/borrow`)
         .then(() => {
-          alert('Raamat väljastatud!');
+          this.showModal = true;
           this.fetchAvailableBooks();
         })
         .catch(error => {

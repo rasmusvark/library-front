@@ -13,22 +13,32 @@
         <button>Tagasi</button>
       </router-link>
     </form>
+    <success-modal 
+    :modal-message="'Raamat edukalt lisatud!'" 
+    v-model:isModalVisible="showModal" 
+    @close="showModal = false"
+  ></success-modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import SuccessModal from '@/components/SuccessModal.vue';
 
 export default {
   name: 'AddBookView',
+  components: {
+    SuccessModal
+  },
   data() {
     return {
       newBook: {
         title: '',
         author: '',
         publishingYear: '',
-        category: ''
-      }
+        category: '',
+      },
+      showModal: false
     };
   },
   methods: {
@@ -42,7 +52,7 @@ export default {
 
   axios.post('http://localhost:8080/books', payload)
     .then(() => {
-      alert('Raamat edukalt lisatud!');
+      this.showModal = true;
       this.resetForm();
     })
     .catch(error => {
